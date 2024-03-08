@@ -9,7 +9,7 @@ import { WorkoutForm } from "../components/WorkoutForm";
 export function Home () {
 
 
-    const { workouts , dispatch } = useWorkoutsContext()
+    const { workouts , dispatch } = useWorkoutsContext() //destructure what I need from the Workouts context
 
 
     useEffect(() => {
