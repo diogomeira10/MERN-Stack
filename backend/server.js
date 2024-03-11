@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+
 //requiring the express package
 const express = require("express");
 const workoutRoutes = require("./Routes/workouts")
