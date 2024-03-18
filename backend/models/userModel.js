@@ -45,7 +45,7 @@ const userSchema = new Schema(
 
     // mypasswordj87123sf125fg
 
-    const salt = await bcrypt.genSalt(10) //this generates the sault, wich is an extra layer of protection matching of passwords
+    const salt = await bcrypt.genSalt(10) //this generates the sault, which is an extra layer of protection matching of passwords
 
     //Now we hash the salt with the password
     const hash = await bcrypt.hash(password, salt)
@@ -54,6 +54,26 @@ const userSchema = new Schema(
 
     return user
 
+}
+
+userSchema.statics.login = async function (email, password) {
+    if(!email || !password) {
+        throw Error("All fields must be filled")
+    }
+
+    const user = await this.findOne({email})
+
+    if(!user) {
+        throw Error('Incorrect email')
+    }
+
+    const match = await bcrypt.compare(password, user.password)
+
+    if(!match) {
+        throw Error('Incorrect login credencials')
+    }
+
+    return user
 }
 
 
