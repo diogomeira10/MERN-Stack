@@ -6,7 +6,6 @@ import useAuthContext from "../hooks/useAuthContext";
 export function Navbar() {
 
   const { logout } = useLogout()
-
   const { user } = useAuthContext()
 
 
