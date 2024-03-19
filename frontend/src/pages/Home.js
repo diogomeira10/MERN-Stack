@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutContext";
+import useAuthContext from "../hooks/useAuthContext";
 
 //components
 import { WorkoutDetails } from "../components/WorkoutDetails";
@@ -8,23 +9,28 @@ import { WorkoutForm } from "../components/WorkoutForm";
 
 export function Home () {
 
-
     const { workouts , dispatch } = useWorkoutsContext() //destructure what I need from the Workouts context
+    const { user } = useAuthContext()
 
 
     useEffect(() => {
         const fetchWorkouts = async () => {
-           const response = await fetch('/api/workouts');
-           console.log(response)
+           const response = await fetch('/api/workouts', {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+           });
            const json = await response.json();
-           console.log(json)
 
            if (response.ok) {
                dispatch({type:'SET_WORKOUTS', payload: json}) // When we fetch the list of workouts we want to update the workouts state with that
            }
         };
-        fetchWorkouts();
-    }, [dispatch])
+        if(user) {
+            fetchWorkouts();
+        }
+
+    }, [dispatch, user])
 
 
 

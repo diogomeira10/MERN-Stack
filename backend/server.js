@@ -37,7 +37,7 @@ app.get("/", (req, res) => {request object has the information about the request
 app.use('/api/workouts', workoutRoutes) //first argument is the defined path to fire specific routes, the second argument is using the workouts routes in the app
 //This means when received a request to the path /api/workouts it is going to use the workoutRoutes
 
-app.use('/api/workouts', userRoutes)
+app.use('/api/user', userRoutes)
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

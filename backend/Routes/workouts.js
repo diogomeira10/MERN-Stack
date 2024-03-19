@@ -1,5 +1,5 @@
 const express = require("express");
-const { 
+const {
   createWorkout,
   getWorkouts,
   getSingleWorkout,
@@ -8,8 +8,13 @@ const {
 
 } = require('../controllers/workoutController')
 
+const requireAuth = require('../middleware/requireauth')
+
 
 const router = express.Router(); //Creating an instance of the express Router
+
+//This line is basically firing the requirAuth function before all the other controller functions, so it check for authentication before hand
+router.use(requireAuth)
 
 //REQUEST HANDLERS
 

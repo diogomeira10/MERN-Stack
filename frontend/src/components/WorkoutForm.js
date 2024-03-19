@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutContext'
+import useAuthContext from '../hooks/useAuthContext'
 
 export function WorkoutForm() {
 
     const { dispatch } = useWorkoutsContext()
+    const { user } = useAuthContext()
 
     const [title, setTitle] = useState('')
     const [load, setLoad] = useState('')
@@ -25,6 +27,11 @@ export function WorkoutForm() {
     const handleFormSubmit = async (e) => {
         e.preventDefault()
 
+        if(!user) {
+            setError('You must be loged in')
+            return 
+        }
+
         const workout = {
             title,
             load,
@@ -35,7 +42,8 @@ export function WorkoutForm() {
             method: 'POST',
             body: JSON.stringify(workout), //We cant just send the workout as an object, we have to turn it into json.
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
 
